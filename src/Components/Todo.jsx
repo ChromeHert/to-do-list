@@ -7,9 +7,24 @@ const Todo = () => {
 
   const handleForm = (e) => {
     e.preventDefault();
-    setTodoList([...todoList, {todoName: todo}]);
-    setTodo("");
+
+    if (todo.trim() !== "") {
+      setTodoList([...todoList, {todoName: todo}]);
+      setTodo("");
+    } else {
+      alert("Please enter a valid task.");
+    }
   };
+
+  const deleteTodo = (deleteValue) => {
+    const restTodoList = [
+      ...todoList.filter((val) => {
+        return val.todoName!== deleteValue;
+      })
+    ];
+    setTodoList(restTodoList);
+  };
+
   return (
     <>
       <div className="bg-gray-200 w-full h-screen flex items-center">
@@ -27,7 +42,7 @@ const Todo = () => {
             />
 
             <button
-              className="bg-blue-900 text-white py-3 px-8 rounded-lg mb-5 my-4"
+              className="bg-[#3a506b] text-white py-3 px-8 rounded-lg mb-5 my-4"
               type="submit"
             >
               Add Todo
@@ -39,7 +54,17 @@ const Todo = () => {
                 return (
                   <li key={index} className="bg-gray-800 text-white py-5 px-4 rounded-lg my-1 flex justify-between">
                     {singleTodo.todoName}
-                    <span className="text-red-600 cursor-pointer">X</span>
+                    <span className="text-red-600 cursor-pointer" onClick={() => deleteTodo(singleTodo.todoName)}>
+                      
+                      <div class="background">
+                        <button class="menu__icon">
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                        </button>
+                      </div>
+
+                    </span>
                   </li>
                 );
               })}
